@@ -1,12 +1,16 @@
 # Author : Kelvin
 # Date : 2019/2/3 21:51
 import socketserver
-from MainWindow import *
-from PyQt5.QtWidgets import QApplication,QMainWindow
+from main import *
+import sys
+import main
 
 buffer_capcity = 1024
 
-class Mysocket(socketserver.BaseRequestHandler, ):
+g_nettool_window=NetToolWindow()
+
+class Mysocket(socketserver.BaseRequestHandler):
+
     def handle(self):
         print(self.request)
         print(self.client_address)
@@ -18,18 +22,18 @@ class Mysocket(socketserver.BaseRequestHandler, ):
                     self.request.close()
                     break
                 else:
-                    print("服务器收到信息：%s" % data)
-                    self.request.send("服务器收到信息！".encode("utf8"))
-
-                    '''
-            except Exception:
-                print("==== close")
-                self.request.close()
-                break
-                '''
+                    #print("服务器收到信息：%s" % data)
+                    g_nettool_window.textBrowserNetRecv.insertPlainText(data)
+                    self.request.send("recv hello word！".encode("utf8"))
+            #except Exception:
+            #    print("==== close")
+            #    self.request.close()
+            #    break
 
 class TcpSever():
-    def create(self, server_addr, port):
+    def create(self, nettool_window, server_addr, port):
+        global g_nettool_window
+        g_nettool_window = nettool_window
         self.server_addr = server_addr
         self.port = port
         self.sock = socketserver.ThreadingTCPServer((self.server_addr, self.port), Mysocket)

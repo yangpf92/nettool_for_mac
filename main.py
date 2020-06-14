@@ -3,7 +3,7 @@ import sys
 from MainWindow import *
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from deviceinfo import DeviceInfo
-from tcpserver import TcpSever
+#from tcpserver import TcpSever
 import threading
 
 #  连接按钮槽函数
@@ -52,8 +52,9 @@ class NetToolWindow(QMainWindow, Ui_MainWindow):
             self.buttonNetConnect_state = False
 
     def __tcpserver_thread_cb(self, ipaddr, port):
+        from tcpserver import TcpSever
         self.tcp_server = TcpSever()
-        self.tcp_server.create(ipaddr, port)
+        self.tcp_server.create(self, ipaddr, port)
         self.tcp_server.run()
 
 #不是在函数和类中定义的变量相当于全局变量，所以上方可以直接使用
