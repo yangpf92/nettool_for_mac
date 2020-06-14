@@ -10,7 +10,7 @@ def check_dup_ipaddr(ipaddr_list, val):
     else:
         return False
 
-class device_info():
+class DeviceInfo():
     def get_host_info(self):
         self.hostname = socket.gethostname()
         mac = uuid.UUID(int=uuid.getnode()).hex[-12:]
@@ -31,7 +31,7 @@ class device_info():
             print(ipaddr)
 
 if __name__ == "__main__":
-    device_info = device_info()
+    device_info = DeviceInfo()
     device_info.get_host_info()
     device_info.get_interface_info()
     device_info.show()
