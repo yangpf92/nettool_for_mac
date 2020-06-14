@@ -44,7 +44,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox">
+         <widget class="QComboBox" name="comboBoxNetProtocolType">
           <item>
            <property name="text">
             <string>TCP Server</string>
@@ -68,6 +68,16 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>连接地址</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxNetConnectAddr"/>
+        </item>
+        <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>本地端口号</string>
@@ -75,36 +85,10 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="P"/>
+         <widget class="QLineEdit" name="lineEditNetPort"/>
         </item>
        </layout>
       </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_7">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_9">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
      <item>
       <spacer name="horizontalSpacer_4">
@@ -159,7 +143,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="buttonNetConnect">
        <property name="text">
         <string>连接</string>
        </property>
@@ -179,13 +163,23 @@
     <property name="title">
      <string>接收缓冲区</string>
     </property>
-    <widget class="QTextBrowser" name="textBrowser">
+    <widget class="QTextBrowser" name="textBrowserNetRecv">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>30</y>
        <width>551</width>
        <height>201</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>100</y>
+       <width>113</width>
+       <height>21</height>
       </rect>
      </property>
     </widget>
@@ -202,7 +196,7 @@
     <property name="title">
      <string>发送缓冲区</string>
     </property>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="textEditNetSend">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -212,7 +206,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="buttonSend">
      <property name="geometry">
       <rect>
        <x>500</x>

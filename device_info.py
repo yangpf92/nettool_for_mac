@@ -20,7 +20,7 @@ class device_info():
         self.ipaddr_list = list()
         ipaddrs = socket.getaddrinfo(socket.gethostname(), None)
         for item in ipaddrs:
-            if ':' not in item[4][0]:
+            if ':' not in item[4][0]:   #TODO:注意这里的含义
                 pass
                 #TODO: 这里的ip地址可能有重复，需要进行判断
                 if check_dup_ipaddr(self.ipaddr_list, item[4][0]) != True:
