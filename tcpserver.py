@@ -1,61 +1,70 @@
 # Author : Kelvin
 # Date : 2019/2/3 21:51
-import socketserver
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+import socket
 import threading
 import time
 import sys
 
-buffer_capcity = 1024
-global g_nettoolwindow
+class TcpSever(QThread):
+    # 定义信号,定义参数为str类型
+    recvmsg_signal = pyqtSignal(str)
 
-class Mysocket(socketserver.BaseRequestHandler):
-    global g_nettoolwindow
-    def __sockRecv_thread_cb(self):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    #发送消息槽函数
+    def sendMsg(self, sendMsg):
+        self.client_socket.send(sendMsg.encode(encoding="utf-8"))
+
+    # 接收消息
+    def __client_thread(self, client_socket, ip_port, recvmsg_signal):
         while True:
-            recv_msg = self.request.recv(buffer_capcity).decode("utf8")
-            if len(recv_msg) < 0:
-                self.request.close()
-                break
+            try:
+                #该接收方式应该为阻塞接收方式
+                recvMsg = client_socket.recv(2048)
+                # 如果接收的消息长度不为0，则将其解码输出
+            except: #TODO:这里应该需要抓取客户端断开连接的异常
+                pass
             else:
-                g_nettoolwindow.textBrowserNetRecv.insertPlainText(recv_msg)
+                if recvMsg:
+                    print("[客户端消息]", ip_port, ":", recvMsg.decode("utf-8"))
+                    recvmsg_signal.emit(recvMsg.decode("gbk"))
+                else:
+                    print("客户端", ip_port, "已下线")
 
-
-    def __sockSend_thread_cb(self):
-        while True:
-            if len(g_nettoolwindow.send_msg) > 0:
-                self.request.send(g_nettoolwindow.send_msg.encode("utf8"))
-                g_nettoolwindow.send_msg = ""
-
-    def handle(self):
-        print(self.request)
-        print(self.client_address)
-        #创建两个线程
-        self.sock_recv_t = threading.Thread(target=self.__sockRecv_thread_cb, args=())
-        self.sock_recv_t.setDaemon(True)    #设置后台，主线程退出则创建的子线程退出
-        self.sock_recv_t.start()
-        self.sock_send_t = threading.Thread(target=self.__sockSend_thread_cb, args=())
-        self.sock_send_t.setDaemon(True)  # 设置后台，主线程退出则创建的子线程退出
-        self.sock_send_t.start()
-        while True:
-            time.sleep(3)
-
-    def finish(self):
-        self.request.close()  # 关闭套接字
-
-class TcpSever():
-    def create(self, nettoolwindow, server_addr, port):
-        global g_nettoolwindow
-        g_nettoolwindow = nettoolwindow
+    def create(self, server_addr, port):
         self.server_addr = server_addr
         self.port = port
-        self.sock = socketserver.ThreadingTCPServer((self.server_addr, self.port), Mysocket)
-        self.sock.allow_reuse_address = True  # 设置端口可重用
-
+        # 创建TCP套接字
+        self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # 设置端口复用
+        self.tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
     def run(self):
-        self.sock.serve_forever()
+        # 绑定端口
+        self.tcp_socket.bind((self.server_addr, self.port))
+        # 设置为被动监听状态，128表示最大连接数
+        self.tcp_socket.listen(128)
+        self.clientList = []
+        while True:
+            # 等待客户端连接
+            self.client_socket, ip_port = self.tcp_socket.accept()
+            self.clientList.append(self.client_socket)
+            print("[新客户端]:", ip_port, "已连接")
+            self.client_socket.setblocking(False)    # 将套接字设置为非堵塞　
+            # 有客户端连接后，创建一个线程将客户端套接字，IP端口传入recv函数，
+            t1 = threading.Thread(target=self.__client_thread, args=(self.client_socket, ip_port, self.recvmsg_signal))
+            # 设置线程守护
+            t1.setDaemon(True)
+            # 启动线程
+            t1.start()
 
-
-
+    def close(self):
+        for client_fd in self.clientList:
+            client_fd.close()
+        self.tcp_socket.close()
 
 if __name__ == "__main__":
     tcp_sever = TcpSever()

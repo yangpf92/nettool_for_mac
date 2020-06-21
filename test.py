@@ -1,10 +1,14 @@
-#global Age
-Age=10
-class A():
-    def __init__(self):
-        global Age
-        Age = 20
-        print(Age)
+import threading
+class Myclass(threading.Thread):
+    def __init__(self, func, args, name):
+        self.target = name
+        threading.Thread.__init__(self, target=func)
+        self.name = name
+        self.args = args
 
-a = A()
-print(Age)
+def hello():
+    print("111111")
+
+if __name__ == "__main__":
+    t = Myclass(hello, (1,), "test")
+    t.start()
