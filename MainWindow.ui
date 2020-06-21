@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>899</width>
-    <height>464</height>
+    <width>880</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>201</width>
-      <height>391</height>
+      <width>211</width>
+      <height>611</height>
      </rect>
     </property>
     <property name="title">
@@ -87,66 +87,158 @@
         <item>
          <widget class="QLineEdit" name="lineEditNetPort"/>
         </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>5</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="buttonNetConnect">
+          <property name="text">
+           <string>连接</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QGroupBox" name="groupBox_5">
+       <property name="title">
+        <string>接收设置</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>110</y>
+          <width>171</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>清空接收</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ASCII</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_4">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>30</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>HEX</string>
+        </property>
+       </widget>
+      </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_8">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QGroupBox" name="groupBox_6">
+       <property name="title">
+        <string>发送设置</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_10">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>122</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonNetConnect">
-       <property name="text">
-        <string>连接</string>
-       </property>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>110</y>
+          <width>171</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>清空发送</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ASCII</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_2">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>30</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>HEX</string>
+        </property>
+       </widget>
       </widget>
      </item>
     </layout>
@@ -156,8 +248,8 @@
      <rect>
       <x>230</x>
       <y>10</y>
-      <width>621</width>
-      <height>241</height>
+      <width>641</width>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
@@ -168,8 +260,8 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>601</width>
-       <height>201</height>
+       <width>621</width>
+       <height>361</height>
       </rect>
      </property>
     </widget>
@@ -178,9 +270,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>260</y>
-      <width>621</width>
-      <height>141</height>
+      <y>440</y>
+      <width>641</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
@@ -190,8 +282,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
-       <width>531</width>
+       <y>60</y>
+       <width>481</width>
        <height>101</height>
       </rect>
      </property>
@@ -199,14 +291,42 @@
     <widget class="QPushButton" name="buttonSend">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>70</y>
-       <width>71</width>
+       <x>510</x>
+       <y>100</y>
+       <width>111</width>
        <height>61</height>
       </rect>
      </property>
      <property name="text">
       <string>发送</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>131</width>
+       <height>32</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>客户端列表</string>
      </property>
     </widget>
    </widget>
