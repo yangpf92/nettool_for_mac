@@ -1,14 +1,4 @@
-import threading
-class Myclass(threading.Thread):
-    def __init__(self, func, args, name):
-        self.target = name
-        threading.Thread.__init__(self, target=func)
-        self.name = name
-        self.args = args
-
-def hello():
-    print("111111")
-
-if __name__ == "__main__":
-    t = Myclass(hello, (1,), "test")
-    t.start()
+my_str="192.168.50.3:39548"
+my_tuple=tuple(my_str.split(":"))
+print(my_tuple[0][2:-1])
+print(my_tuple[1][1:-1])

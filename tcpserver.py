@@ -9,19 +9,32 @@ import time
 import sys
 
 class TcpSever(QThread):
-    # 定义信号,定义参数为str类型
+    #定义常量
+    CLIENT_INFO_TIMER_VAL = 5
+
+    # 定义信号
     recvmsg_signal = pyqtSignal(str)
+    clientInfo_signal = pyqtSignal(str)
+
+    __disconnect_flag = False
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
     #发送消息槽函数
-    def sendMsg(self, sendMsg):
-        self.client_socket.send(sendMsg.encode(encoding="utf-8"))
+    def sendMsg(self, client_tupe, sendMsg):
+        '''这里的client格式为ip地址+端口号的方式，该函数会在所有连接的客户端中去匹配查找 传递下来的格式为[192.168.50.3:39604]
+        '''
+        for client_node in self.__clientList:
+            if str(client_node.getpeername()).find(str(client_tupe[0])) != -1 and \
+                    str(client_node.getpeername()).find(str(client_tupe[1])) != -1:
+                client_node.send(sendMsg.encode(encoding="utf-8"))
 
     # 接收消息
     def __client_thread(self, client_socket, ip_port, recvmsg_signal):
         while True:
+            if self.__disconnect_flag:
+                break
             try:
                 #该接收方式应该为阻塞接收方式
                 recvMsg = client_socket.recv(2048)
@@ -31,7 +44,7 @@ class TcpSever(QThread):
             else:
                 if recvMsg:
                     print("[客户端消息]", ip_port, ":", recvMsg.decode("utf-8"))
-                    recvmsg_signal.emit(recvMsg.decode("gbk"))
+                    recvmsg_signal.emit("[客户端消息]" + str(ip_port) + ": " + recvMsg.decode("utf-8"))
                 else:
                     print("客户端", ip_port, "已下线")
 
@@ -47,23 +60,30 @@ class TcpSever(QThread):
         self.tcp_socket.bind((self.server_addr, self.port))
         # 设置为被动监听状态，128表示最大连接数
         self.tcp_socket.listen(128)
-        self.clientList = []
+        self.__clientList = []
         while True:
-            # 等待客户端连接
-            self.client_socket, ip_port = self.tcp_socket.accept()
-            self.clientList.append(self.client_socket)
-            print("[新客户端]:", ip_port, "已连接")
-            self.client_socket.setblocking(False)    # 将套接字设置为非堵塞　
-            # 有客户端连接后，创建一个线程将客户端套接字，IP端口传入recv函数，
-            t1 = threading.Thread(target=self.__client_thread, args=(self.client_socket, ip_port, self.recvmsg_signal))
-            # 设置线程守护
-            t1.setDaemon(True)
-            # 启动线程
-            t1.start()
+            try:
+                # 等待客户端连接
+                client_socket, ip_port = self.tcp_socket.accept()
+            except ConnectionAbortedError:
+                break
+            else:
+                self.__clientList.append(client_socket)
+                print("====== client_socket :" + str(client_socket.getpeername()))
+                print("[新客户端]:", ip_port, "已连接")
+                self.clientInfo_signal.emit(str(ip_port))
+                client_socket.setblocking(False)    # 将套接字设置为非堵塞　
+                # 有客户端连接后，创建一个线程将客户端套接字，IP端口传入recv函数，
+                t1 = threading.Thread(target=self.__client_thread, args=(client_socket, ip_port, self.recvmsg_signal))
+                # 设置线程守护
+                t1.setDaemon(True)
+                # 启动线程
+                t1.start()
 
     def close(self):
-        for client_fd in self.clientList:
-            client_fd.close()
+        self.__disconnect_flag = True
+        for client in self.__clientList:
+            client.close()
         self.tcp_socket.close()
 
 if __name__ == "__main__":

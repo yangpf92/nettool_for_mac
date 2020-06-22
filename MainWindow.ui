@@ -154,12 +154,12 @@
        <property name="title">
         <string>接收设置</string>
        </property>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="buttonClearRecvBuffer">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>110</y>
-          <width>171</width>
+          <width>181</width>
           <height>32</height>
          </rect>
         </property>
@@ -200,12 +200,12 @@
        <property name="title">
         <string>发送设置</string>
        </property>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="buttonClearSendBuffer">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>0</x>
           <y>110</y>
-          <width>171</width>
+          <width>181</width>
           <height>32</height>
          </rect>
         </property>
@@ -301,12 +301,12 @@
       <string>发送</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboBoxConnectClientList">
      <property name="geometry">
       <rect>
        <x>90</x>
        <y>20</y>
-       <width>131</width>
+       <width>211</width>
        <height>32</height>
       </rect>
      </property>
