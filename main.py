@@ -86,6 +86,7 @@ class NetToolWindow(QMainWindow, Ui_MainWindow):
 
             #更新页面元素
             self.btnNetConnect.setText("开始连接")
+            self.lineEditNetPort.setReadOnly(False)  # 设置只读
             self.comboBoxConnectClientList.clear()  #清空连接列表
 
     def __btnClearRecvBuffer_sloat(self):
